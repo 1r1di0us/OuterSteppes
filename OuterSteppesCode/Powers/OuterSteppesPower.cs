@@ -21,7 +21,7 @@ public abstract class OuterSteppesPower : CustomPowerModel
     /// Whether this power is a buff or debuff.
     /// </summary>
     public abstract override PowerType Type { get; }
-    
+
     /// <summary>
     /// How this power stacks if reapplied. Counter is the most common type, where applying the power again just
     /// adds to the amount. Single means the power does not stack, like Barricade. None functions identically to
