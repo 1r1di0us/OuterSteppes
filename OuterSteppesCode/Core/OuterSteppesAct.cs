@@ -3,7 +3,6 @@ using Godot;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Models.Encounters;
 using MegaCrit.Sts2.Core.Models.Events;
-using MegaCrit.Sts2.Core.Unlocks;
 using OuterSteppes.OuterSteppesCode.Core.Encounters;
 
 namespace OuterSteppes.OuterSteppesCode.Core;
@@ -59,12 +58,11 @@ public sealed class OuterSteppesAct : CustomActModel
     public override Color MapBgColor => new Color("9B9562");
 
     // Original had these empty; CustomActModel defaults to act 3 music
-    public override string[] BgMusicOptions => Array.Empty<string>();
-    public override string[] MusicBankPaths => Array.Empty<string>();
+    public override string[] BgMusicOptions => ["event:/music/act2_a1_v2", "event:/music/act2_a2_v2"];
+    public override string[] MusicBankPaths => ["res://banks/desktop/act2_a1.bank", "res://banks/desktop/act2_a2.bank"];
     public override string AmbientSfx => "event:/sfx/ambience/act2_ambience";
 
-    public override string ChestSpineResourcePath =>
-        "res://animations/backgrounds/treasure_room/chest_room_act_2_skel_data.tres";
+    public override string ChestSpineResourcePath => "res://animations/backgrounds/treasure_room/chest_room_act_2_skel_data.tres";
 
     public override string ChestSpineSkinNameNormal => "act2";
     public override string ChestSpineSkinNameStroke => "act2_stroke";
@@ -74,10 +72,7 @@ public sealed class OuterSteppesAct : CustomActModel
     protected override string CustomMapMidBgPath => "res://images/packed/map/map_bgs/exordium_act/map_middle_exordium_act.png";
     protected override string CustomMapBotBgPath => "res://images/packed/map/map_bgs/exordium_act/map_middle_exordium_act.png";
     protected override string CustomRestSiteBackgroundPath => "res://scenes/rest_site/hive_rest_site.tscn";
-
-    public override int Index => 1;
-    public override bool IsDefault => false;
-
-    public override bool IsUnlocked(UnlockState state) => true;
-
+    
+    protected override int NumberOfWeakEncounters => 2;
+    protected override int BaseNumberOfRooms => 14;
 }
