@@ -1,3 +1,5 @@
 {
-  
+  "HERESY_POWER.title": "Heresy",
+  "HERESY_POWER.description": "Gain [gold]Dexterity[/gold] at the end of your turn.",
+  "HERESY_POWER.smartDescription": "At the end of {OnPlayer:your|its} turn, {OnPlayer:gain|gains} [blue]{Amount}[/blue] [gold]Dexterity[/gold]."
 }

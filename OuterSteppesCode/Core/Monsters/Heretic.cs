@@ -15,13 +15,14 @@ using MegaCrit.Sts2.Core.Localization;
 using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
+using OuterSteppes.OuterSteppesCode.Powers;
 
 namespace OuterSteppes.OuterSteppesCode.Core.Monsters;
 
 public class Heretic : MonsterModel
 {
-  private static readonly LocString _cawCawDialogue = new LocString("monsters", "CALCIFIED_CULTIST.moves.INCANTATION.banter");
-  private const string _buffSfx = "event:/sfx/enemy/enemy_attacks/cultists/cultists_buff_calcified";
+  private static readonly LocString _heresyDialogue = new LocString("monsters", "HERETIC.moves.HERESY_MOVE.banter");
+  private const string BuffSfx = "event:/sfx/enemy/enemy_attacks/cultists/cultists_buff_calcified";
   private float _attackSfxStrength;
 
   public override int MinInitialHp => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 100, 97);
@@ -90,11 +91,11 @@ public class Heretic : MonsterModel
   private async Task HeresyMove(IReadOnlyList<Creature> targets)
   {
     Heretic heretic = this;
-    SfxCmd.Play("event:/sfx/enemy/enemy_attacks/cultists/cultists_buff_calcified");
+    SfxCmd.Play(BuffSfx);
     await CreatureCmd.TriggerAnim(heretic.Creature, "Cast", 0.5f);
-    TalkCmd.Play(Heretic._cawCawDialogue, heretic.Creature, VfxColor.Purple, VfxDuration.Standard);
+    TalkCmd.Play(Heretic._heresyDialogue, heretic.Creature, VfxColor.Purple, VfxDuration.Standard);
     await Cmd.CustomScaledWait(0.25f, 0.5f);
-    RitualPower heresyPower = await PowerCmd.Apply<RitualPower>(new ThrowingPlayerChoiceContext(), heretic.Creature, heretic.HeresyAmount, heretic.Creature, null);
+    HeresyPower heresyPower = await PowerCmd.Apply<HeresyPower>(new ThrowingPlayerChoiceContext(), heretic.Creature, heretic.HeresyAmount, heretic.Creature, null);
   }
 
   private async Task AttackBlockMove(IReadOnlyList<Creature> targets)
