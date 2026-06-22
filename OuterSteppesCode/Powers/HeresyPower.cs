@@ -1,4 +1,5 @@
-﻿using MegaCrit.Sts2.Core.Combat;
+﻿using BaseLib.Abstracts;
+using MegaCrit.Sts2.Core.Combat;
 using MegaCrit.Sts2.Core.Commands;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.Entities.Powers;
@@ -9,7 +10,7 @@ using MegaCrit.Sts2.Core.Models.Powers;
 
 namespace OuterSteppes.OuterSteppesCode.Powers;
 
-public class HeresyPower : PowerModel
+public class HeresyPower : CustomPowerModel
 {
     private bool _wasJustAppliedByEnemy;
 

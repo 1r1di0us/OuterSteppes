@@ -1,7 +1,7 @@
 ﻿{
-  "HERETIC.name": "Heretic",
-  "HERETIC.moves.HERESY_MOVE.title": "Heresy",
-  "HERETIC.moves.HERESY_MOVE.banter": "[jitter]GRUAHHH![/jitter]",
-  "HERETIC.moves.ATTACK_BLOCK_MOVE_1.title": "Swipe",
-  "HERETIC.moves.BIG_ATTACK_MOVE.title": "Smash"
+  "OUTERSTEPPES-HERETIC.name": "Heretic",
+  "OUTERSTEPPES-HERETIC.moves.HERESY_MOVE.title": "Heresy",
+  "OUTERSTEPPES-HERETIC.moves.HERESY_MOVE.banter": "[jitter]GRUAHHH![/jitter]",
+  "OUTERSTEPPES-HERETIC.moves.ATTACK_BLOCK_MOVE_1.title": "Swipe",
+  "OUTERSTEPPES-HERETIC.moves.BIG_ATTACK_MOVE.title": "Smash"
 }

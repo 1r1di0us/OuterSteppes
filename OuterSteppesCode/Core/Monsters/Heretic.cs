@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using BaseLib.Abstracts;
+using Godot;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
 using MegaCrit.Sts2.Core.Commands;
@@ -7,21 +8,19 @@ using MegaCrit.Sts2.Core.Entities.Ascension;
 using MegaCrit.Sts2.Core.Entities.Creatures;
 using MegaCrit.Sts2.Core.GameActions.Multiplayer;
 using MegaCrit.Sts2.Core.Helpers;
-using MegaCrit.Sts2.Core.Models.Powers;
 using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Audio;
 using MegaCrit.Sts2.Core.Localization;
-using MegaCrit.Sts2.Core.Models;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 using OuterSteppes.OuterSteppesCode.Powers;
 
 namespace OuterSteppes.OuterSteppesCode.Core.Monsters;
 
-public class Heretic : MonsterModel
+public class Heretic : CustomMonsterModel
 {
-  private static readonly LocString _heresyDialogue = new LocString("monsters", "HERETIC.moves.HERESY_MOVE.banter");
+  private static readonly LocString _heresyDialogue = new LocString("monsters", "OUTERSTEPPES-HERETIC.moves.HERESY_MOVE.banter");
   private const string BuffSfx = "event:/sfx/enemy/enemy_attacks/cultists/cultists_buff_calcified";
   private float _attackSfxStrength;
 
