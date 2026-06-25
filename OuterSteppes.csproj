@@ -63,6 +63,7 @@
         <Folder Include="OuterSteppesCode\Core\Events\" />
         <Folder Include="OuterSteppes\images\card_portraits\big\"/>
         <Folder Include="OuterSteppes\images\map\" />
+        <Folder Include="OuterSteppes\images\monsters\" />
         <Folder Include="OuterSteppes\images\powers\big\"/>
         <Folder Include="OuterSteppes\images\relics\big\"/>
     </ItemGroup>
