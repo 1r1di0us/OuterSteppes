@@ -1,4 +1,5 @@
 ﻿using BaseLib.Abstracts;
+using BaseLib.Utils.NodeFactories;
 using Godot;
 using MegaCrit.Sts2.Core.Animation;
 using MegaCrit.Sts2.Core.Bindings.MegaSpine;
@@ -12,6 +13,7 @@ using MegaCrit.Sts2.Core.MonsterMoves.Intents;
 using MegaCrit.Sts2.Core.MonsterMoves.MonsterMoveStateMachine;
 using MegaCrit.Sts2.Core.Audio;
 using MegaCrit.Sts2.Core.Localization;
+using MegaCrit.Sts2.Core.Nodes.Combat;
 using MegaCrit.Sts2.Core.Nodes.Vfx;
 using MegaCrit.Sts2.Core.ValueProps;
 using OuterSteppes.OuterSteppesCode.Powers;
@@ -36,7 +38,7 @@ public class Heretic : CustomMonsterModel
 
   private int HeresyAmount => AscensionHelper.GetValueIfAscension(AscensionLevel.ToughEnemies, 6, 5);
 
-  public override DamageSfxType TakeDamageSfxType => DamageSfxType.Fur;
+  public override DamageSfxType TakeDamageSfxType => DamageSfxType.Armor;
 
   public override Vector2 ExtraDeathVfxPadding => new Vector2(1.5f, 1.2f);
 
@@ -57,34 +59,39 @@ public class Heretic : CustomMonsterModel
     }
   }
 
-  public override void SetupSkins(MegaSprite spine, MegaSkeleton skeleton)
+  /*public override void SetupSkins(MegaSprite spine, MegaSkeleton skeleton)
   {
     MegaSkin skin = spine.NewSkin("custom-skin");
     MegaSkeletonDataResource data = skeleton.GetData();
     skin.AddSkin(data.FindSkin("coral"));
     skeleton.SetSkin(skin);
     skeleton.SetSlotsToSetupPose();
+  }*/
+  
+  public override NCreatureVisuals CreateCustomVisuals()
+  {
+      return NodeFactory<NCreatureVisuals>.CreateFromResource("res://OuterSteppes/images/monsters/Heretic.png");
   }
 
   protected override MonsterMoveStateMachine GenerateMoveStateMachine()
   {
     List<MonsterState> states = new List<MonsterState>();
-    MoveState initialState = new MoveState("HERESY_MOVE", HeresyMove, new BuffIntent());
-    MoveState moveState1 = new MoveState("ATTACK_BLOCK_MOVE_1", AttackBlockMove, new SingleAttackIntent(AttackDamage), new DefendIntent());
-    MoveState moveState2 = new MoveState("ATTACK_BLOCK_MOVE_2", AttackBlockMove, new SingleAttackIntent(AttackDamage), new DefendIntent());
-    MoveState moveState3 = new MoveState("ATTACK_BLOCK_MOVE_3", AttackBlockMove, new SingleAttackIntent(AttackDamage), new DefendIntent());
-    MoveState moveState4 = new MoveState("BIG_ATTACK_MOVE", BigAttackMove, new SingleAttackIntent(BigAttackDamage));
-    initialState.FollowUpState = moveState1;
+    MoveState moveState1 = new MoveState("HERESY_MOVE", HeresyMove, new BuffIntent());
+    MoveState moveState2 = new MoveState("ATTACK_BLOCK_MOVE_1", AttackBlockMove, new SingleAttackIntent(AttackDamage), new DefendIntent());
+    MoveState moveState3 = new MoveState("BIG_ATTACK_MOVE", BigAttackMove, new SingleAttackIntent(BigAttackDamage));
+    MoveState repeatState1 = new MoveState("ATTACK_BLOCK_MOVE_2", AttackBlockMove, new SingleAttackIntent(AttackDamage), new DefendIntent());
+    MoveState repeatState2 = new MoveState("ATTACK_BLOCK_MOVE_3", AttackBlockMove, new SingleAttackIntent(AttackDamage), new DefendIntent());
     moveState1.FollowUpState = moveState2;
-    moveState2.FollowUpState = moveState3;
-    moveState3.FollowUpState = moveState4;
-    moveState4.FollowUpState = moveState1;
-    states.Add(initialState);
+    moveState2.FollowUpState = repeatState1;
+    repeatState1.FollowUpState = repeatState2;
+    repeatState2.FollowUpState = moveState3;
+    moveState3.FollowUpState = moveState2;
     states.Add(moveState1);
     states.Add(moveState2);
     states.Add(moveState3);
-    states.Add(moveState4);
-    return new MonsterMoveStateMachine(states, initialState);
+    states.Add(repeatState1);
+    states.Add(repeatState2);
+    return new MonsterMoveStateMachine(states, moveState1);
   }
 
   private async Task HeresyMove(IReadOnlyList<Creature> targets)
@@ -92,7 +99,7 @@ public class Heretic : CustomMonsterModel
     Heretic heretic = this;
     SfxCmd.Play(BuffSfx);
     await CreatureCmd.TriggerAnim(heretic.Creature, "Cast", 0.5f);
-    TalkCmd.Play(Heretic._heresyDialogue, heretic.Creature, VfxColor.Purple, VfxDuration.Standard);
+    TalkCmd.Play(_heresyDialogue, heretic.Creature, VfxColor.Purple, VfxDuration.Standard);
     await Cmd.CustomScaledWait(0.25f, 0.5f);
     HeresyPower heresyPower = await PowerCmd.Apply<HeresyPower>(new ThrowingPlayerChoiceContext(), heretic.Creature, heretic.HeresyAmount, heretic.Creature, null);
   }
@@ -106,8 +113,8 @@ public class Heretic : CustomMonsterModel
 
   private async Task BigAttackMove(IReadOnlyList<Creature> targets)
   {
-    Heretic monster = this;
-    AttackCommand attackCommand = await DamageCmd.Attack(monster.BigAttackDamage).FromMonster(monster).WithAttackerAnim("Attack", 0.2f).BeforeDamage(monster.PlayAttackSfx).WithHitFx("vfx/vfx_attack_slash").Execute(null);
+    Heretic heretic = this;
+    AttackCommand attackCommand = await DamageCmd.Attack(heretic.BigAttackDamage).FromMonster(heretic).WithAttackerAnim("Attack", 0.2f).WithAttackerFx(null, AttackSfx).WithHitFx("vfx/vfx_attack_blunt").Execute(null);
   }
   
   public override CreatureAnimator GenerateAnimator(MegaSprite controller)
@@ -133,5 +140,10 @@ public class Heretic : CustomMonsterModel
     SfxCmd.Play(AttackSfx, "enemy_strength", AttackSfxStrength);
     AttackSfxStrength += 0.2f;
     return Task.CompletedTask;
+  }
+  
+  protected override bool ShouldShowMoveInBestiary(string moveStateId)
+  {
+    return moveStateId != "ATTACK_BLOCK_MOVE_2" && moveStateId != "ATTACK_BLOCK_MOVE_3";
   }
 }

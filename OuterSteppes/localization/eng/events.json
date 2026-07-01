@@ -1,0 +1,10 @@
+﻿{
+  "OUTERSTEPPES-CENTENNIAL_FOUNTAIN.title": "Centennial Fountain",
+  "OUTERSTEPPES-CENTENNIAL_FOUNTAIN.pages.INITIAL.description": "You happen upon a fountain full of all sorts of coins. \nInscribed on it are the words “What you take, you shall return a hundredfold”.",
+  "OUTERSTEPPES-CENTENNIAL_FOUNTAIN.pages.INITIAL.options.CHOOSE.title": "Choose the best coin",
+  "OUTERSTEPPES-CENTENNIAL_FOUNTAIN.pages.INITIAL.options.CHOOSE.description": "Pay [red]{GoldCost}[/red] [gold]Gold[/gold]. Obtain the [gold]{Relic}[/gold].",
+  "OUTERSTEPPES-CENTENNIAL_FOUNTAIN.pages.INITIAL.options.PILFER.title": "Pilfer the Fountain",
+  "OUTERSTEPPES-CENTENNIAL_FOUNTAIN.pages.INITIAL.options.PILFER.description": "Add [red]{Curse}[/red] to your [gold]Deck[/gold]. Gain [blue]{GoldGain}[/blue] [gold]Gold[/gold].",
+  "OUTERSTEPPES-CENTENNIAL_FOUNTAIN.pages.CHOOSE.description": "You search the whole fountain for a while, trying to find the perfect coin. \nHidden under some coins you manage to find a coin that is cool and you want it. \n\nYou toss away [blue]{GoldCost}[/blue] of your bits of [gold]Gold[/gold] to pay for your new shiny and continue your journey...",
+  "OUTERSTEPPES-CENTENNIAL_FOUNTAIN.pages.PILFER.description": "You just start grabbing coins out of the Fountain and start stuffing them into your pocket. \nAs you do, you feel your conscience weighing on you [sine]heavily[/sine]. \n\nEventually, the [red]Guilt[/red] gets to you and you leave the fountain. \nWas it guilt? Or was it Compulsion?"
+}
